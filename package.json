@@ -8,13 +8,15 @@
     "build": "tsc",
     "db:migrate": "npx prisma migrate dev",
     "db:seed": "npx prisma db seed",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
@@ -24,6 +26,8 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@prisma/client": "^6.6.0",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
