@@ -23,7 +23,7 @@ Authorization: Bearer <token>
 
 **POST** `/auth/register`
 
-Request body:
+**Request Body:**
 ```json
 {
   "name": "User Name",
@@ -32,7 +32,7 @@ Request body:
 }
 ```
 
-Response:
+**Response:**
 ```json
 {
   "user": {
@@ -50,7 +50,7 @@ Response:
 
 **POST** `/auth/login`
 
-Request body:
+**Request Body:**
 ```json
 {
   "email": "user@example.com",
@@ -58,7 +58,7 @@ Request body:
 }
 ```
 
-Response:
+**Response:**
 ```json
 {
   "user": {
@@ -78,10 +78,10 @@ Response:
 
 **GET** `/services`
 
-Query parameters:
+**Query Parameters:**
 - `category` (optional): Filter services by category
 
-Response:
+**Response:**
 ```json
 [
   {
@@ -110,7 +110,7 @@ Response:
 
 **GET** `/services/:id`
 
-Response:
+**Response:**
 ```json
 {
   "id": 1,
@@ -137,10 +137,10 @@ Response:
 
 **GET** `/providers`
 
-Query parameters:
+**Query Parameters:**
 - `serviceId` (optional): Filter providers by service
 
-Response:
+**Response:**
 ```json
 [
   {
@@ -165,7 +165,7 @@ Response:
 
 **GET** `/providers/:id`
 
-Response:
+**Response:**
 ```json
 {
   "id": 1,
@@ -194,7 +194,7 @@ Response:
 
 **POST** `/bookings`
 
-Request body:
+**Request Body:**
 ```json
 {
   "serviceId": 1,
@@ -203,8 +203,19 @@ Request body:
 }
 ```
 
-Response:
+**Response:**
 ```json
 {
   "id": 1,
-  "userId":
+  "userId": 1,
+  "serviceId": 1,
+  "providerId": 1,
+  "date": "2023-10-05T14:00:00.000Z",
+  "createdAt": "2023-10-01T12:00:00.000Z",
+  "updatedAt": "2023-10-01T12:00:00.000Z"
+}
+```
+
+### Database Transaction Consistency for Bookings
+
+  ``To maintain consistency while making a booking, we start a database transaction before creating the booking. Within the transaction, we first check if the provider is already booked for the requested date and time. If a conflict is detected, the transaction is aborted and an error is returned. If the provider is available, we proceed to insert the new booking inside the same transaction. The transaction is committed only if all operations succeed; otherwise, it is rolled back to ensure no partial or conflicting data is saved.``
