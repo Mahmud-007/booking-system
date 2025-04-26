@@ -32,7 +32,7 @@ export const authenticateJwt = (req: Request, res: Response, next: NextFunction)
   }
 
   try {
-    const jwtSecret = process.env.JWT_SECRET || 'your-secret-key-here';
+    const jwtSecret = process.env.JWT_SECRET as string
     const decoded = jwt.verify(token, jwtSecret) as TokenPayload;
     req.user = decoded;
     next();

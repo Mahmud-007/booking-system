@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import { ServiceController } from '../controllers/service.controller';
+import { authenticateJwt } from '../middleware/auth.middleware';
 
 const router = Router();
 const serviceController = new ServiceController();
+
+router.use(authenticateJwt as any); 
 
 router.post('/', serviceController.createService);
 // GET /api/services - Get all services
